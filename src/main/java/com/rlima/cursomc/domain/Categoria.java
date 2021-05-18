@@ -24,8 +24,7 @@ public class Categoria implements Serializable{
 		super();
 		this.id = id;
 		this.nome = nome;
-	}
-	
+	}	
 	
 
 	@Override
