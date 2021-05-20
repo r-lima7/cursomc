@@ -16,7 +16,7 @@ import com.rlima.cursomc.repositories.ProdutoRepository;
 public class CursomcApplication implements CommandLineRunner {
 
 	@Autowired
-	private CategoriaRepository categoriaRepository;
+	private CategoriaRepository categoriaRepository; //essas instancias permitem o armazenamento de uma categoria e/ou produto
 	@Autowired
 	private ProdutoRepository produtoRepository;
 	
@@ -36,15 +36,15 @@ public class CursomcApplication implements CommandLineRunner {
 		Produto p2 = new Produto(null, "impressora", 800.00);
 		Produto p3 = new Produto(null, "mouse", 80.00);
 		
-		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3));
+		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3)); //agora as categorias conhecem o produtos relacionados
 		cat2.getProdutos().addAll(Arrays.asList(p2));
 		
-		p1.getCategorias().addAll(Arrays.asList(cat1));
+		p1.getCategorias().addAll(Arrays.asList(cat1)); //agora os produtos conhecem sua categoria 
 		p2.getCategorias().addAll(Arrays.asList(cat1, cat2));
 		p3.getCategorias().addAll(Arrays.asList(cat1));
 		
 		
-		categoriaRepository.saveAll(Arrays.asList(cat1, cat2));
+		categoriaRepository.saveAll(Arrays.asList(cat1, cat2)); //salva todas as categorias e os produtos criados e relacionados
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
 
