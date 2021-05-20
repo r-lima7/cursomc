@@ -5,7 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.rlima.cursomc.domain.Categoria;
 
-//Camada de acesso a dados
+//Camada de acesso a dados (DAO)
 @Repository
 public interface CategoriaRepository extends JpaRepository<Categoria, Integer>{
 	
