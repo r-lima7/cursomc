@@ -22,8 +22,9 @@ public class Produto implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	private String nome;
-	private Double preco;
+	private Double preco;	
 	
+	// omite a lista de categorias para cada produto
 	@JsonBackReference //quando os objetos forem buscados do outro lado a busa é interrompida
 	@ManyToMany //mapeamento em cima de uma lista de categorias
 	@JoinTable(name = "PRODUTO_CATEGORIA", //cria uma tabela de associacao muitos para muitos
@@ -42,7 +43,8 @@ public class Produto implements Serializable {
 		this.id = id;
 		this.nome = nome;
 		this.preco = preco;
-	}	
+	}
+	
 	
 
 	@Override
@@ -69,6 +71,8 @@ public class Produto implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
 	public Integer getId() {
 		return id;
@@ -101,9 +105,5 @@ public class Produto implements Serializable {
 	public void setCategorias(List<Categoria> categorias) {
 		this.categorias = categorias;
 	}
-	
-	
-	
-	
 
 }

@@ -18,8 +18,7 @@ public class CategoriaService {
 	
 	public Categoria buscar (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
 		Optional<Categoria> obj = repo.findById(id); //Optional, objeto container
-		//return obj.orElse(null); // impede a instancia de obj nulo - se existe ele retorna obj se não retorna o VALOR nulo
-		
+			//return obj.orElse(null); // impede a instancia de obj nulo - se existe ele retorna obj se não retorna o VALOR nulo		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
 				"Objeto não encontrado! Id: " + id + ", Tipo: " + Categoria.class.getName()));
 		

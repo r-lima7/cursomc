@@ -4,7 +4,7 @@ public class ObjectNotFoundException extends RuntimeException{ //classe de excec
 	private static final long serialVersionUID = 1L;
 	
 	public ObjectNotFoundException(String msg) {
-		super(msg);
+		super(msg); // reaproveitando a infraestrutura de esxecoes do java
 	}
 	
 	public ObjectNotFoundException(String msg, Throwable cause) {
