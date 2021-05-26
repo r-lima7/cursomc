@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 public class Endereco implements Serializable {	
 	private static final long serialVersionUID = 1L;
@@ -22,10 +24,12 @@ public class Endereco implements Serializable {
 	private String bairro;
 	private String cep;
 	
+	@JsonBackReference // endereco nao pode serializar cliente
 	@ManyToOne
 	@JoinColumn(name = "cliente_id")
 	private Cliente cliente;
 	
+	//nesse caso não é preciso referencia por @Json ja que a cidade não conhece o endereco
 	@ManyToOne
 	@JoinColumn(name = "cidade_id")
 	private Cidade cidade; // so o endereco conhece a cidade, cidade não conhece endereco
