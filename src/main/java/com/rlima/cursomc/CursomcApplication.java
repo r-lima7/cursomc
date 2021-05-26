@@ -9,10 +9,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import com.rlima.cursomc.domain.Categoria;
 import com.rlima.cursomc.domain.Cidade;
+import com.rlima.cursomc.domain.Cliente;
+import com.rlima.cursomc.domain.Endereco;
 import com.rlima.cursomc.domain.Estado;
 import com.rlima.cursomc.domain.Produto;
+import com.rlima.cursomc.domain.enums.TipoCliente;
 import com.rlima.cursomc.repositories.CategoriaRepository;
 import com.rlima.cursomc.repositories.CidadeRepository;
+import com.rlima.cursomc.repositories.ClienteRepository;
+import com.rlima.cursomc.repositories.EnderecoRepository;
 import com.rlima.cursomc.repositories.EstadoRepository;
 import com.rlima.cursomc.repositories.ProdutoRepository;
 
@@ -27,6 +32,11 @@ public class CursomcApplication implements CommandLineRunner {
 	private EstadoRepository estadoRepository;
 	@Autowired
 	private CidadeRepository cidadeRepository;
+	@Autowired
+	private ClienteRepository clienteRepository;
+	@Autowired
+	private EnderecoRepository enderecoRepository;
+	
 	
 	
 	public static void main(String[] args) {
@@ -37,6 +47,8 @@ public class CursomcApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		
+		// Instancias de teste
+		// as instancias precisam ser feitas na ordem correta na logica do sistema, tambem garante a coerencia dos dados
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		
@@ -68,6 +80,18 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		// o id deve ser omitido do construtor? ou ja setado automaticamente como null?
+		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "325441545845", TipoCliente.PESSOAFISICA);
+		//a seguinte logica pode e deve ser implementada diretamento no setTelefones de Cliente
+		cli1.getTelefones().addAll(Arrays.asList("212545847", "956554825")); //get pois recupera o array telefones, não seta valor a uma veriavel comum
+		
+		Endereco e1 = new Endereco(null, "Rua Flores", "300", "apto 303", "Jardim", "325245587", cli1, c1);
+		Endereco e2 = new Endereco(null, "Avenida Matos", "105", "Sala 800", "Centro", "325254522", cli1, c2);
+		
+		cli1.getEnderecos().addAll(Arrays.asList(e1,e2));
+		
+		clienteRepository.saveAll(Arrays.asList(cli1));
+		enderecoRepository.saveAll(Arrays.asList(e1, e2));		
 
 		
 	}
