@@ -25,6 +25,11 @@ public class CategoriaService {
 		
 	}
 	
+	public Categoria insert(Categoria obj) {
+		obj.setId(null); // garantia
+		return repo.save(obj);
+	}
+	
 	
 
 }
