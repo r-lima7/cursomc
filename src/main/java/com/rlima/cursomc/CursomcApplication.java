@@ -13,6 +13,7 @@ import com.rlima.cursomc.domain.Cidade;
 import com.rlima.cursomc.domain.Cliente;
 import com.rlima.cursomc.domain.Endereco;
 import com.rlima.cursomc.domain.Estado;
+import com.rlima.cursomc.domain.ItemPedido;
 import com.rlima.cursomc.domain.Pagamento;
 import com.rlima.cursomc.domain.PagamentoComBoleto;
 import com.rlima.cursomc.domain.PagamentoComCartao;
@@ -25,6 +26,7 @@ import com.rlima.cursomc.repositories.CidadeRepository;
 import com.rlima.cursomc.repositories.ClienteRepository;
 import com.rlima.cursomc.repositories.EnderecoRepository;
 import com.rlima.cursomc.repositories.EstadoRepository;
+import com.rlima.cursomc.repositories.ItemPedidoRepository;
 import com.rlima.cursomc.repositories.PagamentoRepository;
 import com.rlima.cursomc.repositories.PedidoRepository;
 import com.rlima.cursomc.repositories.ProdutoRepository;
@@ -48,6 +50,8 @@ public class CursomcApplication implements CommandLineRunner {
 	private PedidoRepository pedidoRepository;
 	@Autowired
 	private PagamentoRepository pagamentoRepository;
+	@Autowired
+	private ItemPedidoRepository itemPedidoRepository;
 	
 	
 	
@@ -64,9 +68,9 @@ public class CursomcApplication implements CommandLineRunner {
 		Categoria cat1 = new Categoria(null, "Informática");
 		Categoria cat2 = new Categoria(null, "Escritório");
 		
-		Produto p1 = new Produto(null, "computador", 2000.00);
-		Produto p2 = new Produto(null, "impressora", 800.00);
-		Produto p3 = new Produto(null, "mouse", 80.00);
+		Produto p1 = new Produto(null, "Computador", 2000.00);
+		Produto p2 = new Produto(null, "Impressora", 800.00);
+		Produto p3 = new Produto(null, "Mouse", 80.00);
 		
 		cat1.getProdutos().addAll(Arrays.asList(p1, p2, p3)); //agora as categorias conhecem o produtos relacionados
 		cat2.getProdutos().addAll(Arrays.asList(p2));
@@ -78,7 +82,7 @@ public class CursomcApplication implements CommandLineRunner {
 		categoriaRepository.saveAll(Arrays.asList(cat1, cat2)); //salva todas as categorias e os produtos criados e relacionados
 		produtoRepository.saveAll(Arrays.asList(p1, p2, p3));
 		
-		
+		//-------------------------------------------------------------------------------------------------------------------------------------------
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
 
@@ -92,6 +96,7 @@ public class CursomcApplication implements CommandLineRunner {
 		estadoRepository.saveAll(Arrays.asList(est1, est2));
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		
+		//-------------------------------------------------------------------------------------------------------------------------------------------
 		// o id deve ser omitido do construtor? ou ja setado automaticamente como null?
 		Cliente cli1 = new Cliente(null, "Maria Silva", "maria@gmail.com", "325441545845", TipoCliente.PESSOAFISICA);
 		//a seguinte logica pode e deve ser implementada diretamento no setTelefones de Cliente
@@ -105,6 +110,7 @@ public class CursomcApplication implements CommandLineRunner {
 		clienteRepository.saveAll(Arrays.asList(cli1));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2));
 		
+		//----------------------------------------------------------------------------------------------------------------------------------------------
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
 		Pedido ped1 = new Pedido(null, sdf.parse("30/09/2017 10:32"), cli1, e1);
@@ -121,7 +127,20 @@ public class CursomcApplication implements CommandLineRunner {
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2));
 		pagamentoRepository.saveAll(Arrays.asList(pagto1, pagto2));
 		
-
+		//----------------------------------------------------------------------------------------------------------------------------------------------
+		ItemPedido ip1 = new ItemPedido(ped1, p1, 0.00, 1, 2000.00);
+		ItemPedido ip2 = new ItemPedido(ped1, p3, 0.00, 2, 80.00);
+		ItemPedido ip3 = new ItemPedido(ped2, p2, 100.00, 1, 800.00);
+		
+		ped1.getItens().addAll(Arrays.asList(ip1, ip2));
+		ped2.getItens().addAll(Arrays.asList(ip3));
+		
+		p1.getItens().addAll(Arrays.asList(ip1));
+		p2.getItens().addAll(Arrays.asList(ip3));
+		p3.getItens().addAll(Arrays.asList(ip2));
+		
+		itemPedidoRepository.saveAll(Arrays.asList(ip1, ip2, ip3));
+		
 		
 	}
 	
