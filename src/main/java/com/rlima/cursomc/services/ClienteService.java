@@ -16,7 +16,7 @@ public class ClienteService {
 	@Autowired // Para instanciar automaticamente (injeção de dependencia ou inversao de controle)
 	private ClienteRepository repo; // objeto da camada de acesso a dados
 	
-	public Cliente buscar (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
+	public Cliente find (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
 		Optional<Cliente> obj = repo.findById(id); //Optional, objeto container
 			//return obj.orElse(null); // impede a instancia de obj nulo - se existe ele retorna obj se não retorna o VALOR nulo		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(

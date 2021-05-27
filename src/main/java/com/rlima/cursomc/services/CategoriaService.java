@@ -17,7 +17,7 @@ public class CategoriaService {
 	@Autowired // Para instanciar automaticamente (injeção de dependencia ou inversao de controle)
 	private CategoriaRepository repo; // objeto da camada de acesso a dados
 	
-	public Categoria buscar (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
+	public Categoria find (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
 		Optional<Categoria> obj = repo.findById(id); //Optional, objeto container
 			//return obj.orElse(null); // impede a instancia de obj nulo - se existe ele retorna obj se não retorna o VALOR nulo		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
@@ -28,6 +28,12 @@ public class CategoriaService {
 	public Categoria insert(Categoria obj) {
 		obj.setId(null); // garantia
 		return repo.save(obj);
+	}
+	
+	public Categoria update (Categoria obj) {
+		find(obj.getId());
+		return repo.save(obj);
+		
 	}
 	
 	

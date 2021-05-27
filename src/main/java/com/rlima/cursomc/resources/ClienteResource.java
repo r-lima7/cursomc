@@ -19,9 +19,9 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.GET) // O value define que sera recebido um parametro, aqui é um id
-	public ResponseEntity<?> find(@PathVariable Integer id) { // PathVariable declara que o id recebido sera inserido na variavel
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) { // PathVariable declara que o id recebido sera inserido na variavel
 		// poderia ser usado aqui um bloco try catch, porem isso sujaria o codigo, a ideia é que o controlador tenha clean code
-		Cliente obj = service.buscar(id); //acessando a classe service e usar o metodo criado na classe ClienteService
+		Cliente obj = service.find(id); //acessando a classe service e usar o metodo criado na classe ClienteService
 		return ResponseEntity.ok().body(obj); // verifica se a operação foi feita com sucesso.		
 			
 	}
