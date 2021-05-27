@@ -14,8 +14,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.rlima.cursomc.domain.enums.TipoCliente;
 
 @Entity
@@ -31,7 +30,7 @@ public class Cliente implements Serializable {
 	//private TipoCliente tipo;
 	private Integer tipo;
 	
-	@JsonManagedReference // somente Cliente pode serializar Endereco
+	//@JsonManagedReference // somente Cliente pode serializar Endereco
 	@OneToMany(mappedBy = "cliente")
 	private List<Endereco> enderecos = new ArrayList<>();
 	
@@ -39,7 +38,8 @@ public class Cliente implements Serializable {
 	@CollectionTable(name = "TELEFONE")
 	private Set<String> telefones = new HashSet<>(); //coloquei como opcao a implementar uma classe apenas com um atributo
 	
-	@JsonBackReference // os pedidos do cliente não serao serializados
+	//@JsonBackReference // os pedidos do cliente não serao serializados
+	@JsonIgnore // mesmo efeito
 	@OneToMany(mappedBy = "cliente")
 	private List<Pedido> pedidos = new ArrayList<>();
 	
