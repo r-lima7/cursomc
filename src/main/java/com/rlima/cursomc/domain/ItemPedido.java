@@ -5,10 +5,13 @@ import java.io.Serializable;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class ItemPedido implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@JsonIgnore // Obs: a superclasse ja e serializada por padrao
 	@EmbeddedId // declara um tipo de id composto usando classe auxiliar
 	private ItemPedidoPK id = new ItemPedidoPK(); 
 	private Double desconto;
@@ -55,11 +58,12 @@ public class ItemPedido implements Serializable {
 	}
 	
 	
-
+	@JsonIgnore
 	public Pedido getPedido() { // esses 2 metodos get melhoram a semantica da classe, pois não precisa que o id seja acessado primero
 		return id.getPedido();
 	}
 	
+	//@JsonIgnore o produto precisa ser retornado
 	public Produto getProduto() {
 		return id.getProduto();
 	}

@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.rlima.cursomc.domain.enums.EstadoPagamento;
 
 @Entity
@@ -22,6 +23,7 @@ public abstract class Pagamento implements Serializable {	// o sistemas não dev
 	private Integer estado;
 	
 	// o id do pagamento precisa ser o mesmo do pedido as anotações a seguir definem isso
+	@JsonBackReference
 	@OneToOne // um pagamento para um pedido sempre
 	@JoinColumn(name = "pedido_id")
 	@MapsId
