@@ -3,10 +3,12 @@ package com.rlima.cursomc.services;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import com.rlima.cursomc.domain.Categoria;
 import com.rlima.cursomc.repositories.CategoriaRepository;
+import com.rlima.cursomc.services.exceptions.DataIntegrityException;
 import com.rlima.cursomc.services.exceptions.ObjectNotFoundException;
 
 //Camada de serviço p/ consultas de categorias - utiliza camada de acesso a dados(repository) para realizar regras de negocio
@@ -35,6 +37,21 @@ public class CategoriaService {
 		return repo.save(obj);
 		
 	}
+	
+	public void delete (Integer id) {
+		find(id); //verifica se existe		
+		try {
+			repo.deleteById(id); // metodo interno do spring data
+			
+		} catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma categoria com produtos associados");
+			
+		}
+		
+
+	}
+	
+	
 	
 	
 

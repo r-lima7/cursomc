@@ -46,6 +46,15 @@ public class CategoriaResource {
 		
 	}
 	
+	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE) // O value define que sera recebido um parametro, aqui é um id
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+		
+	}
+	
+	
+	
 	
 	
 	
