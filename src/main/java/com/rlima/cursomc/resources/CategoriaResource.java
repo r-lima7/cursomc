@@ -5,11 +5,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
@@ -66,6 +68,20 @@ public class CategoriaResource { // os metodos são declarados no controlador e 
 			
 	}
 	
+	@RequestMapping(value = "/page", method = RequestMethod.GET) // O value define que sera recebido um parametro, aqui é um id
+	public ResponseEntity<Page <CategoriaDTO>> findPage(
+			// as seguintes anotacoes definem os parametros como opcionais e definem o valor padrao
+			@RequestParam(value = "page", defaultValue = "0" ) Integer page, 
+			@RequestParam(value = "linesPerPage", defaultValue = "24" ) Integer linesPerPage, //24 é multiplo de 4 e de 2, o que facilita a responsividade
+			@RequestParam(value = "orderBy", defaultValue = "nome" ) String orderBy, 
+			@RequestParam(value = "direction", defaultValue = "ASC" )String direction) { // PathVariable declara que o id recebido sera inserido na variavel
+		
+		Page <Categoria> list = service.findPage(page, linesPerPage, orderBy, direction); //acessando a classe service e usar o metodo criado na classe CategoriaService
+		// para converter uma list em outra utilizando recurso do Java 8
+		Page <CategoriaDTO> listDTO = list.map(obj -> new CategoriaDTO(obj));
+		return ResponseEntity.ok().body(listDTO); // verifica se a operação foi feita com sucesso.		
+			
+	}
 	
 	
 	
