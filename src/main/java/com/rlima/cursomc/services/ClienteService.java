@@ -37,7 +37,7 @@ public class ClienteService {
 	}*/
 	
 	public Cliente update (Cliente obj) {
-		Cliente newObj = find(obj.getId());
+		Cliente newObj = find(obj.getId()); // a instancia permite que o obj seja monitorado pelo JPA
 		updateData(newObj, obj);
 		return repo.save(newObj);
 		

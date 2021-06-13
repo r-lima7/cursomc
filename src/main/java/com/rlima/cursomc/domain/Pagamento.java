@@ -37,7 +37,8 @@ public abstract class Pagamento implements Serializable {	// o sistemas não dev
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
-		this.estado = estado.getCod();
+		//this.estado = estado.getCod();
+		this.estado = (estado == null) ? null : estado.getCod(); //troquei o codigo para evitar ponteiro nulo
 		this.pedido = pedido;
 	}	
 
