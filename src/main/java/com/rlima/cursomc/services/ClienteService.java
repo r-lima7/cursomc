@@ -69,7 +69,7 @@ public class ClienteService {
 			repo.deleteById(id); // metodo interno do spring data
 			
 		} catch (DataIntegrityViolationException e) {
-			throw new DataIntegrityException("Não é possivel excluir porque há entidades relacionadas");
+			throw new DataIntegrityException("Não é possivel excluir porque há pedidos relacionados");
 			
 		}
 	}
