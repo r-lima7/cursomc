@@ -26,7 +26,7 @@ public class ProdutoService {
 	@Autowired
 	CategoriaRepository categoriaRepository;
 	
-	public Produto buscar (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
+	public Produto find (Integer id) { // Busca a categoria pelo Id indicado pelo controlador
 		Optional<Produto> obj = repo.findById(id); //Optional, objeto container
 			//return obj.orElse(null); // impede a instancia de obj nulo - se existe ele retorna obj se não retorna o VALOR nulo		
 		return obj.orElseThrow(() -> new ObjectNotFoundException(
